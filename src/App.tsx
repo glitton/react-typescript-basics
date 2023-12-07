@@ -1,5 +1,6 @@
 import CoarseGoalList from "./components/CoarseGoalList.tsx";
 import Header from "./components/Header.tsx";
+import NewGoal from "./components/NewGoal.tsx";
 import goalsImg from "./assets/goals.jpg";
 import { useState } from "react";
 
@@ -10,12 +11,12 @@ export type CoarseGoal = {
 };
 export default function App() {
   const [goals, setGoals] = useState<CoarseGoal[]>([]);
-  const handleAddGoal = () => {
+  const handleAddGoal = (goal: string, summary: string) => {
     setGoals((prevGoals) => {
       const newGoal: CoarseGoal = {
         id: Math.random(),
-        title: "Learn React with TS",
-        description: "Learn this in depth",
+        title: goal,
+        description: summary,
       };
       return [...prevGoals, newGoal];
     });
@@ -30,7 +31,7 @@ export default function App() {
       <Header image={{ src: goalsImg, alt: "A list of goals" }}>
         <h1>Your Course Goals</h1>
       </Header>
-      <button onClick={handleAddGoal}>Add Goal</button>
+      <NewGoal onAddGoal={handleAddGoal} />
       <CoarseGoalList goals={goals} onDeleteGoal={handleDeleteGoal} />
     </main>
   );
